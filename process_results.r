@@ -3,18 +3,17 @@ rm(list=ls())
 options(stringsAsFactors=FALSE)
 library(jsonlite)
 library(dplyr)
-# library(httr)
+library(xlsx)
+
 
 # returns lst_ckan_results  (length ix 23348)
 load(file = "results.rda")
 
-# work out which entires contained the "result" elemetn
+# work out which entires contained the "result" 
 vct_bln_results <- sapply(lst_ckan_results, function(x) { "result" %in% names(x) &&  is.recursive(x) })
 
 # length here is 23,347
 lst_ckan_results_valid <- lst_ckan_results[vct_bln_results]
-
-test <- lst_ckan_results_valid[1:10]
 
 
 # ==================================================
@@ -118,27 +117,15 @@ df_result <- data.frame(num = vct_id,
                         ckan_ref = vct_ckan_ref
                          )
 
+# save the sucker for future processing.
+save(df_result, file = "df_results.rda")
 
 
+c_date_char <- Sys.Date() %>% as.character() %>% gsub("-","", . )
+c_file_name_stem <- "data_gov_au_ckan_extract_"
+c_file_name <- paste0(c_file_name_stem, c_date_char, ".xlsx")
 
 
-
-
-
-
-
-
-                 
-                                                 
-                                                 
-
-
-
-
-
-
-
-
-
-
+write.xlsx2(x = df_result, file = c_file_name,
+           sheetName = "ckan_data", row.names = FALSE, showNA = TRUE)
 
