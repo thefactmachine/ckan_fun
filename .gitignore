@@ -1,0 +1,8 @@
+# ignore the large data files
+.RData
+.RHistory
+.rda
+ckan_fun.Rproj
+# .gitignore
+.Rproj.user
+results.rda
