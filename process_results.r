@@ -129,3 +129,17 @@ c_file_name <- paste0(c_file_name_stem, c_date_char, ".xlsx")
 write.xlsx2(x = df_result, file = c_file_name,
            sheetName = "ckan_data", row.names = FALSE, showNA = TRUE)
 
+
+
+
+df_bio_regional <- df_result %>% 
+                  filter(organisation == "bioregional-assessment-programme") %>% 
+                  filter(url == "no url") %>% select(title, ckan_ref)
+
+df_bio_all <- df_result %>% filter(organisation == "bioregional-assessment-programme") 
+
+
+write.xlsx2(x = df_bio_regional, file = "bio_reg.xlsx",
+            sheetName = "bio_regional", row.names = FALSE, showNA = TRUE)
+
+
